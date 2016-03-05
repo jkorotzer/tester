@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  scope '/api' do
+    scope '/v1' do
+      scope '/employees' do
+        get '/' => 'api_employees#index'
+        post '/' => 'api_employees#create'
+        scope '/:id' do
+          get '/' => 'api_employees#show'
+          put '/' => 'api_employees#update'
+          scope '/addresses' do
+            get '/' => 'api_addresses#index'
+            post '/' => 'api_addresses#create'
+            scope '/:address_id' do
+              get '/' => 'api_addresses#show'
+              put '/' => 'api_addresses#update'
+            end
+          end
+        end
+      end
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
