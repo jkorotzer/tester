@@ -30,7 +30,7 @@ class ApiEmployeesController < BaseApiController
       render nothing: true, status: :conflict
     else
       @employee = Employee.new
-      @employee.assign_attributes(@json['employee']
+      @employee.assign_attributes(@json['employee'])
       if @employee.save
         render json: @employee
       else
