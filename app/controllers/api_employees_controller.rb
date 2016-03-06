@@ -4,13 +4,15 @@ class ApiEmployeesController < BaseApiController
   before_filter :find_employee, only: [:show, :update]
 
   before_filter only: :create do
-    unless @json['employee'] && @json['employee']['address']
+    parse_request
+    unless @json.has_key?('employee') && @json['employee']['address']
       render nothing: true, status: :bad_request
     end
   end
 
   before_filter only: :update do
-    unless @json['employee']
+    parse_request
+    unless @json.has_key?('employee')
       render nothing: true, status: :bad_request
     end
   end
