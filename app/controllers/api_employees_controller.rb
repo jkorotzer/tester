@@ -1,16 +1,16 @@
 class ApiEmployeesController < BaseApiController
   skip_before_filter  :verify_authenticity_token
-  
+
   before_filter :find_employee, only: [:show, :update]
 
   before_filter only: :create do
-    unless @json.has_key?('employee') && @json['employee']['address']
+    unless @json['employee'] && @json['employee']['address']
       render nothing: true, status: :bad_request
     end
   end
 
   before_filter only: :update do
-    unless @json.has_key?('employee')
+    unless @json['employee']
       render nothing: true, status: :bad_request
     end
   end
