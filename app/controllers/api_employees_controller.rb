@@ -1,4 +1,5 @@
 class ApiEmployeesController < BaseApiController
+  skip_before_filter  :verify_authenticity_token
   before_filter :find_employee, only: [:show, :update]
 
   before_filter only: :create do
