@@ -4,19 +4,35 @@ Rails.application.routes.draw do
       scope '/employees' do
         get '/' => 'api_employees#index'
         post '/' => 'api_employees#create'
-        scope '/:id' do
-          get '/' => 'api_employees#show'
-          put '/' => 'api_employees#update'
-          scope '/addresses' do
-            get '/' => 'api_addresses#index'
-            post '/' => 'api_addresses#create'
-            scope '/:address_id' do
-              get '/' => 'api_addresses#show'
-              put '/' => 'api_addresses#update'
-            end
-          end
+          scope '/:employee_id' do
+            get '/' => 'api_employees#show'
+            put '/' => 'api_employees#update'
+              scope '/timesheets' do
+                get '/' => 'api_timesheets#index'
+                post '/' => 'api_timesheets#create'
+              end
+           end
         end
-      end
+        scope '/employers' do
+          get '/' => 'api_employers#index'
+          post '/' => 'api_employers#create'
+            scope '/:employer_id' do
+              get '/' => 'api_employers#show'
+              put '/' => 'api_employers#update'
+                scope '/timesheets' do
+                  get '/' => 'api_timesheets#index'
+                end
+                scope '/addresses' do
+                  get '/' => 'api_addresses#index'
+                  post '/' => 'api_addresses#create'
+                    scope '/:address' do
+                      get '/' => 'api_addresses#show'
+                      put '/' => 'api_addresses#update'
+                    end
+                end
+            end
+        end
+
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

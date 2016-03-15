@@ -5,7 +5,7 @@ class ApiEmployeesController < BaseApiController
 
   before_filter only: :create do
     parse_request
-    unless @json.has_key?('employee') && @json['employee']['address']
+    unless @json.has_key?('employee') && @json['employee']['employer_id'] && @json['employee']['name'] && @json['employee']['password']
       render nothing: true, status: :bad_request
     end
   end
@@ -54,7 +54,7 @@ class ApiEmployeesController < BaseApiController
 
  private
    def find_employee
-     @employee = Employee.find_by_id(params[:id])
+     @employee = Employee.find_by_id(params[:employee_id])
      render nothing: true, status: :not_found unless @employee.present?
    end
 end
