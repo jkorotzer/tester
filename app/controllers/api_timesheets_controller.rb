@@ -21,10 +21,10 @@ class ApiTimesheetsController < BaseApiController
     if(params.has_key?(:day))
       week = @json['timesheet']['day']
       begin_date = DateTime.new(year, month, day, 00, 00, 00)
-      end_date = begin_date + 1.week
+      end_date = begin_date + 1.week + 1.day
     else
       begin_date = DateTime.new(year, month, 01, 00, 00, 00)
-      end_date = begin_date + 1.month
+      end_date = begin_date + 1.month + 1.day
     end
     if(params.has_key?(:employer_id))
       render json: Timesheet.where(employer_id: params[:employer_id], time: begin_date..end_date)
@@ -37,6 +37,7 @@ class ApiTimesheetsController < BaseApiController
   def create
     @timesheet = Timesheet.new
     @timesheet.assign_attributes(@json['timesheet'])
+    @timesheet.time = Time.now
     if @timesheet.save
       render json: @timesheet
     else

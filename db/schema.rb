@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315052447) do
+ActiveRecord::Schema.define(version: 20160321194832) do
 
   create_table "addresses", force: :cascade do |t|
     t.string  "address"
@@ -33,8 +33,9 @@ ActiveRecord::Schema.define(version: 20160315052447) do
   create_table "timesheets", force: :cascade do |t|
     t.integer  "employer_id"
     t.integer  "employee_id"
-    t.datetime "time"
     t.boolean  "in"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
