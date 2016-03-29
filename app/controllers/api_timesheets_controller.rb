@@ -35,10 +35,8 @@ class ApiTimesheetsController < BaseApiController
   end
 
   def create
-    @timesheet = Timesheet.new
+    @timesheet = Timesheet.new(employee_id: params[:employee_id], employer_id: Employee.find(params[:employee_id]).employer.id)
     @timesheet.assign_attributes(@json['timesheet'])
-    @timesheet.employee_id = params[:employee_id]
-    @timesheet.employer_id = Employee.find(params[:employee_id]).employer.id
     if @timesheet.save
       render json: @timesheet
     else
