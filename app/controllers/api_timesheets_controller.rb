@@ -4,7 +4,7 @@ class ApiTimesheetsController < BaseApiController
   before_filter only: :create do
     parse_request
     unless @json.has_key?('timesheet') && @json['timesheet']['in']
-      render nothing: true, status: :bad_request
+      render "no key", status: :bad_request
     end
   end
 
@@ -18,7 +18,7 @@ class ApiTimesheetsController < BaseApiController
   def index
     year = @json['timesheet']['year']
     month = @json['timesheet']['month']
-    if(params.has_key?(:day))
+    if(@json.has_key?(:day))
       week = @json['timesheet']['day']
       begin_date = DateTime.new(year, month, day, 00, 00, 00)
       end_date = begin_date + 1.week + 1.day
