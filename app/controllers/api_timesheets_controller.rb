@@ -42,7 +42,7 @@ class ApiTimesheetsController < BaseApiController
     if @timesheet.save
       render json: @timesheet
     else
-       render nothing: "did not save", status: :bad_request
+       render "did not save", status: :bad_request
     end
   end
 
