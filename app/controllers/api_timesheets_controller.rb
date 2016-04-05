@@ -16,10 +16,10 @@ class ApiTimesheetsController < BaseApiController
   end
 
   def index
-    year = @json['timesheet']['year']
-    month = @json['timesheet']['month']
+    year = @json['timesheet']['year'].to_i
+    month = @json['timesheet']['month'].to_i
     if(@json.has_key?(:day))
-      week = @json['timesheet']['day']
+      week = @json['timesheet']['day'].to_i
       begin_date = DateTime.new(year, month, day, 00, 00, 00)
       end_date = begin_date + 1.week + 1.day
     else
