@@ -3,8 +3,8 @@ class ApiTimesheetsController < BaseApiController
 
   before_filter only: :create do
     parse_request
-    unless @json.has_key?('timesheet') && @json['timesheet']['in']
-      render "no key", status: :bad_request
+    unless @json.has_key?('timesheet') && @json['timesheet']['in'] && @json['timesheet']['employer_id'] && @json['timesheet']['employee_id']
+      render nothing: true, status: :bad_request
     end
   end
 
@@ -28,19 +28,21 @@ class ApiTimesheetsController < BaseApiController
     end
     if(params.has_key?(:employer_id))
       render json: Timesheet.where(employer_id: params[:employer_id], time: begin_date..end_date)
-    else
+    elsif(params.has_key?(:employee_id))
       render json: Timesheet.where(employee_id: params[:employee_id], time: begin_date..end_date)
+    else 
+      render nothing: true, status: :bad_request
     end
 
   end
 
   def create
-    @timesheet = Timesheet.new(employee_id: params[:employee_id], employer_id: Employee.find(params[:employee_id]).employer.id)
+    @timesheet = Timesheet.new
     @timesheet.assign_attributes(@json['timesheet'])
     if @timesheet.save
       render json: @timesheet
     else
-       render "did not save", status: :bad_request
+       render nothing: true, status: :bad_request
     end
   end
 
