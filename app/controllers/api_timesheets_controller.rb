@@ -27,9 +27,9 @@ class ApiTimesheetsController < BaseApiController
       end_date = begin_date + 1.month + 1.day
     end
     if(params.has_key?(:employer_id))
-      render json: Timesheet.where(employer_id: params[:employer_id], time: begin_date..end_date)
+      render json: Timesheet.where(employer_id: params[:employer_id], created_at: begin_date..end_date)
     elsif(params.has_key?(:employee_id))
-      render json: Timesheet.where(employee_id: params[:employee_id], time: begin_date..end_date)
+      render json: Timesheet.where(employee_id: params[:employee_id], created_at: begin_date..end_date)
     else 
       render nothing: true, status: :bad_request
     end
