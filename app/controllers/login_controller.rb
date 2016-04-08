@@ -4,8 +4,8 @@ class LoginController < BaseApiController
 
     before_filter only: :index do
       parse_request
-      unless @json.has_key?('username') && @json.has_key?('password')
-        render nothing: true, status: :500
+      unless @json.has_key?('name') && @json.has_key?('password')
+        render nothing: true, status: :bad_request
         end
     end
 
