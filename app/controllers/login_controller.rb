@@ -1,5 +1,7 @@
 class LoginController < BaseApiController
-
+  
+    skip_before_filter  :verify_authenticity_token
+  
     before_filter only: :index do
       parse_request
       unless @json.has_key?('username') && @json.has_key?('password')
