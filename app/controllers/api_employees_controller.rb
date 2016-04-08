@@ -18,7 +18,7 @@ class ApiEmployeesController < BaseApiController
   end
 
   before_filter only: :create do
-    @employee = Employee.find_by_id(@json['employee']['id'])
+    @employee = Employee.find_by_name(@json['employee']['name'])
   end
 
   def index
