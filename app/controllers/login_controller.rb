@@ -12,7 +12,7 @@ class LoginController < BaseApiController
     def index
       @employee = Employee.find_by_name(@json['name'])
       if @employee.present?
-        render json: @employee.valid_password?(@json['password'])
+        render json: @employee.authenticate(@json['password'])
       else
         render nothing: true, status: :bad_request
       end
