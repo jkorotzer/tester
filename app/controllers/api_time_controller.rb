@@ -11,7 +11,6 @@ class ApiTimeController < BaseApiController
 
   def index
     @timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
-    
   end
 
   private
@@ -22,7 +21,5 @@ class ApiTimeController < BaseApiController
       @begin_date = DateTime.new(year, month, day, 00, 00, 00)
       @end_date = begin_date + 1.day
     end
-  end
-
 
 end
