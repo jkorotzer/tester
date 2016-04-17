@@ -8,10 +8,11 @@ Rails.application.routes.draw do
             get '/' => 'api_employees#show'
             put '/' => 'api_employees#update'
               scope '/timesheets' do
-                put '/' => 'api_timesheets#index'
                 post '/' => 'api_timesheets#create'
+                put '/' => 'api_timesheets#update'
                 scope '/time' do
                   post '/' => 'api_time#index'
+                  put '/' => 'api_timesheets#index'
                 end
               end
            end
@@ -23,7 +24,9 @@ Rails.application.routes.draw do
               get '/' => 'api_employers#show'
               put '/' => 'api_employers#update'
                 scope '/timesheets' do
-                  put '/' => 'api_timesheets#index'
+                  scope '/time' do
+                    put '/' => 'api_timesheets#index'
+                  end
                 end
                 scope '/addresses' do
                   get '/' => 'api_addresses#index'
