@@ -72,13 +72,14 @@ class ApiTimesheetsController < BaseApiController
     if @timesheet.save
       render json: @timesheet
     else
-      render nothing: true, status: :bad_request  
+      render nothing: true, status: :bad_request
+    end
   end
 
    private
-   def find_timesheet
-     @timesheet = Timesheet.find(@json['timesheet']['id'])
-     render nothing: true, status: :not_found unless @timesheet.present?
-   end
+     def find_timesheet
+       @timesheet = Timesheet.find(@json['timesheet']['id'])
+       render nothing: true, status: :not_found unless @timesheet.present?
+     end
 
 end
