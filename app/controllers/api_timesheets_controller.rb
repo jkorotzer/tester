@@ -69,7 +69,10 @@ class ApiTimesheetsController < BaseApiController
     second = @json['timesheet']['second'].to_i
     timesheet_time = DateTime.new(year, month, day, hour, minute, second)
     @timesheet.created_at = timesheet_time
-    render json: @timesheet
+    if @timesheet.save
+      render json: @timesheet
+    else
+      render nothing: true, status: :bad_request  
   end
 
    private
