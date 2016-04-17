@@ -3,7 +3,7 @@ class ApiTimesheetsController < BaseApiController
 
   before_filter only: :create do
     parse_request
-    unless @json.has_key?('timesheet') && @json['timesheet']['in'] && @json['timesheet']['employer_id'] && @json['timesheet']['employee_id']
+    unless @json.has_key?('timesheet') && @json['timesheet']['in']
       render nothing: true, status: :bad_request
     end
   end
@@ -18,10 +18,14 @@ class ApiTimesheetsController < BaseApiController
   def index
     year = @json['timesheet']['year'].to_i
     month = @json['timesheet']['month'].to_i
-    if(@json.has_key?(:day))
-      week = @json['timesheet']['day'].to_i
-      begin_date = DateTime.new(year, month, day, 00, 00, 00)
+    if(@json.has_key?(:week))
+      week = @json['timesheet']['week'].to_i
+      begin_date = DateTime.new(year, month, week, 00, 00, 00)
       end_date = begin_date + 1.week
+    elsif(@json.has_key?(:day))
+      day = @json['timesheet']['day'].to_i
+      begin_date = DateTime.new(year, month, day, 00, 00, 00)
+      end_date = begin_date + 1.day
     else
       begin_date = DateTime.new(year, month, 01, 00, 00, 00)
       end_date = begin_date + 1.month
@@ -39,6 +43,8 @@ class ApiTimesheetsController < BaseApiController
   def create
     @timesheet = Timesheet.new
     @timesheet.assign_attributes(@json['timesheet'])
+    @timesheet.employee_id = params[:employee_id]
+    @timesheet.employer_id = Employer.find(Employee.find(1).employer_id)
     if @timesheet.save
       render json: @timesheet
     else
