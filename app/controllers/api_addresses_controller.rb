@@ -5,7 +5,7 @@ class ApiAddressesController < BaseApiController
 
   before_filter only: :create do
     parse_request
-    unless @json.has_key?('address') && @json['address']['address'] && @json['address']['employer_id']
+    unless @json.has_key?('address') && @json['address']['address']
       render nothing: true, status: :bad_request
     end
   end
@@ -31,6 +31,7 @@ class ApiAddressesController < BaseApiController
 
   def create
     @address = Address.new
+    @address.employer_id = params[:employer_id]
     @address.assign_attributes(@json['address'])
     if @address.save
       render json: @address

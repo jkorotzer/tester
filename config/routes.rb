@@ -10,6 +10,9 @@ Rails.application.routes.draw do
               scope '/timesheets' do
                 put '/' => 'api_timesheets#index'
                 post '/' => 'api_timesheets#create'
+                scope '/time' do
+                  post '/' => 'api_time#index'
+                end
               end
            end
         end
