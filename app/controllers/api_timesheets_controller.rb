@@ -26,11 +26,11 @@ class ApiTimesheetsController < BaseApiController
   def index
     year = @json['timesheet']['year'].to_i
     month = @json['timesheet']['month'].to_i
-    if(@json['week'])
+    if(@json['timesheet']['week'])
       week = @json['timesheet']['week'].to_i
       begin_date = DateTime.new(year, month, week, 00, 00, 00)
       end_date = begin_date + 1.week
-    elsif(@json['day'])
+    elsif(@json['timesheet']['day'])
       day = @json['timesheet']['day'].to_i
       begin_date = DateTime.new(year, month, day, 00, 00, 00)
       end_date = begin_date + 1.day
