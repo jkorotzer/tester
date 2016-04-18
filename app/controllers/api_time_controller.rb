@@ -29,7 +29,7 @@ class ApiTimeController < BaseApiController
       month = @json['time']['month'].to_i
       day = @json['time']['day'].to_i
       @begin_date = DateTime.new(year, month, day, 00, 00, 00)
-      @end_date = begin_date + 1.day
+      @end_date = @begin_date + 1.day
     end
 
 end
