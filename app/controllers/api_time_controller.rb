@@ -13,7 +13,7 @@ class ApiTimeController < BaseApiController
     timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
     last_time = @begin_date
     total_time = 0
-    timsheets.each do |timesheet|
+    timesheets.each do |timesheet|
       if timesheet.in
         last_time = timesheet.created_at
       else
