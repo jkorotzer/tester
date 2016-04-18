@@ -15,15 +15,18 @@ class ApiTimeController < BaseApiController
     last_timesheet_was_in = false
     total_time = 0
     timesheets.each do |timesheet|
+      puts "timesheet"
       if timesheet.in
+        puts "timesheet in"
         if !last_timesheet_was_in
           last_time = timesheet.created_at
+          puts last_time
           last_timesheet_was_in = true
         end
       else
         if last_timesheet_was_in
-          f
           total_time = total_time + TimeDifference.between(last_time, timesheet.created_at).in_seconds
+          puts total_time
           last_timesheet_was_in = false
         end
       end
