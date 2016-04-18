@@ -12,12 +12,20 @@ class ApiTimeController < BaseApiController
   def index
     timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
     last_time = @begin_date
+    last_timesheet_was_in = false
     total_time = 0
     timesheets.each do |timesheet|
       if timesheet.in
-        last_time = timesheet.created_at
+        if !last_timesheet_was_in
+          last_time = timesheet.created_at
+          last_timesheet_was_in = true
+        end
       else
-        total_time = total_time + TimeDifference.between(last_time, timesheet.created_at).in_seconds
+        if last_timesheet_was_in
+          f
+          total_time = total_time + TimeDifference.between(last_time, timesheet.created_at).in_seconds
+          last_timesheet_was_in = false
+        end
       end
     end
     render json: total_time
