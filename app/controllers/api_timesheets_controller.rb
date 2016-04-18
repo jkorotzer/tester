@@ -68,6 +68,7 @@ class ApiTimesheetsController < BaseApiController
     minute = @json['timesheet']['minute'].to_i
     second = @json['timesheet']['second'].to_i
     timesheet_time = DateTime.new(year, month, day, hour, minute, second)
+    timesheet_time = timesheet_time.in_time_zone(Time.zone)
     @timesheet.created_at = timesheet_time
     if @timesheet.save
       render json: @timesheet

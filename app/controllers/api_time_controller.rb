@@ -10,7 +10,17 @@ class ApiTimeController < BaseApiController
   end
 
   def index
-    @timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
+    timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
+    last_time = @begin_date
+    total_time = 0
+    timsheets.each do |timesheet|
+      if timesheet.in
+        last_time = timesheet.created_at
+      else
+        total_time = total_time + TimeDifference.between(last_time, timesheet.created_at).in_seconds
+      end
+    end
+    render json: total_time
   end
 
   private
