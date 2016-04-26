@@ -10,7 +10,7 @@ class ApiTimesheetsController < BaseApiController
 
   before_filter only: :index do
     parse_request
-    unless @json.has_key?('timesheet') && @json['timesheet']['year'] && @json['timesheet']['month']
+    unless @json.has_key?('timesheet') && @json['timesheet']['year'] && @json['timesheet']['month'] && @json['timesheet']['start_day'] && @json['timesheet']['end_day']
       render nothing: true, status: :bad_request
     end
   end
@@ -26,18 +26,10 @@ class ApiTimesheetsController < BaseApiController
   def index
     year = @json['timesheet']['year'].to_i
     month = @json['timesheet']['month'].to_i
-    if(@json['timesheet']['week'])
-      week = @json['timesheet']['week'].to_i
-      begin_date = DateTime.new(year, month, week, 00, 00, 00)
-      end_date = begin_date + 1.week
-    elsif(@json['timesheet']['day'])
-      day = @json['timesheet']['day'].to_i
-      begin_date = DateTime.new(year, month, day, 00, 00, 00)
-      end_date = begin_date + 1.day
-    else
-      begin_date = DateTime.new(year, month, 01, 00, 00, 00)
-      end_date = begin_date + 1.month
-    end
+    start_day = @json['timesheet']['start_day'].to_i
+    end_day = @json['timesheet']['end_day'].to_i
+    begin_date = DateTime.new(year, month, start_day, 00, 00, 00)
+    end_date = DateTime.new(year, month, end_day, 00, 00, 00)
     if(params.has_key?(:employer_id))
       render json: Timesheet.where(employer_id: params[:employer_id], created_at: begin_date..end_date)
     elsif(params.has_key?(:employee_id))

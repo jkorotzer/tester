@@ -10,7 +10,7 @@ class ApiTimeController < BaseApiController
   end
 
   def index
-    timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date)
+    timesheets = Timesheet.where(employee_id: params[:employee_id], created_at: @begin_date..@end_date).sort_by{|t| t.created_at}
     last_time = @begin_date
     last_timesheet_was_in = false
     total_time = 0
