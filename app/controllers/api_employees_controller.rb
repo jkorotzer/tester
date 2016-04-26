@@ -37,7 +37,7 @@ class ApiEmployeesController < BaseApiController
       @employee.assign_attributes(@json['employee'])
       if @employee.save
         json = { :employee => @employee, :addresses => @employee.employer.addresses }.to_json
-        render json
+        render json: json
       else
          render nothing: true, status: :bad_request
       end
