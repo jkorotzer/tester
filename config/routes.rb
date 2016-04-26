@@ -3,7 +3,6 @@ Rails.application.routes.draw do
     scope '/v1' do
       scope '/employees' do
         get '/' => 'api_employees#index'
-        post '/' => 'api_employees#create'
           scope '/:employee_id' do
             get '/' => 'api_employees#show'
             put '/' => 'api_employees#update'
@@ -39,6 +38,7 @@ Rails.application.routes.draw do
             end
         end
       post '/login' => 'login#index'
+      post '/signup' => 'api_employees#create'
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
