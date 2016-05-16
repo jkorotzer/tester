@@ -17,7 +17,6 @@ class ApiTimeController < BaseApiController
     timesheets.each do |timesheet|
       puts "timesheet"
       if timesheet.in
-        puts "timesheet in"
         if !last_timesheet_was_in
           last_time = timesheet.created_at
           puts last_time
